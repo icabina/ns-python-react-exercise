@@ -11,7 +11,7 @@ class Transaction(Base):
     amount = Column(Float, nullable=False)
     type = Column(String, index=True) # e.g., 'credit', 'debit'
     category_id = Column(Integer, ForeignKey("categories.id"), index=True)
-    category_rel = relationship("Category", back_populates="transactions")
+    category_rel = relationship("Category", back_populates="transactions", lazy="selectin")
     date = Column(DateTime(timezone=True), server_default=func.now())
     user_id = Column(Integer, index=True) # Mocked authentication
 

@@ -29,3 +29,12 @@ class TransactionInDBBase(BaseModel):
 class TransactionInDB(TransactionInDBBase):
     category_rel: Category
 
+class TransactionListItem(BaseModel):
+    id: int
+    description: str
+    amount: float
+    type: str
+    category_id: int
+    category_name: str
+    date: datetime
+

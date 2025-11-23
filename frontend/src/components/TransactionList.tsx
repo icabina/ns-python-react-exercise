@@ -5,10 +5,8 @@ interface Transaction {
   description: string;
   amount: number;
   type: string;
-  category_rel: {
-    id: number;
-    name: string;
-  };
+  category_id: number;
+  category_name: string;
   date: string;
   user_id: number;
 }
@@ -76,7 +74,7 @@ const TransactionList: React.FC = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                  {transaction.category_rel.name}
+                  {transaction.category_name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
                   {transaction.description}
