@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.crud import crud_transaction
-from app.schemas.transaction import TransactionCreate, TransactionUpdate, TransactionInDB
+from app.schemas.transaction import TransactionCreate, TransactionUpdate, TransactionInDB, TransactionListItem
 from app.db.session import get_db
 
 router = APIRouter()
@@ -12,7 +12,7 @@ router = APIRouter()
 def create_new_transaction(transaction: TransactionCreate, db: Session = Depends(get_db)):
     return crud_transaction.create_transaction(db=db, transaction=transaction, user_id=1)
 
-@router.get("/transactions/", response_model=List[TransactionInDB])
+@router.get("/transactions/", response_model=List[TransactionListItem])
 def read_transactions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     transactions = crud_transaction.get_transactions(db, skip=skip, limit=limit)
     return transactions
