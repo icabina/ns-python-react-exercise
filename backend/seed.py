@@ -1,16 +1,16 @@
 import os
 import sys
+import random
 from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), './app')))
 
 from app.db.base import Base
 from app.db.session import engine
 from app.models.transaction import Transaction
 from app.models.category import Category # Import the new Category model
-
+from app.models.tag import Tag
 from app.core.config import settings
 
 def init_db():
@@ -21,6 +21,31 @@ def init_db():
 def seed_db():
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     db = SessionLocal()
+
+    tags = ["Work", "Travel", "Reimbursable", "Personal", "Urgent", "Entertainment"]
+    tag_objs = []
+
+    for t_name in tags:
+        # Check if tag already exists to avoid duplicates
+        existing_tag = db.query(Tag).filter_by(name=t_name).first()
+        if not existing_tag:
+            db_tag = Tag(name=t_name)
+            db.add(db_tag)
+            tag_objs.append(db_tag)
+        else:
+            tag_objs.append(existing_tag)
+
+    db.commit()
+
+    # Attach random tags to all transactions
+    all_transactions = db.query(Transaction).all()
+    for transaction in all_transactions:
+        # Pick 1 to 3 random tags for each transaction
+        transaction_tags = random.sample(tag_objs, k=random.randint(1, 3))
+        transaction.tags = transaction_tags
+
+    db.commit()
+    db.close()
 
     try:
         # Check if the tables are empty before seeding
@@ -92,3 +117,4 @@ if __name__ == "__main__":
     # This will ensure tables are created before attempting to seed
     init_db()
     seed_db()
+
