@@ -45,7 +45,6 @@ def seed_db():
         transaction.tags = transaction_tags
 
     db.commit()
-
     db.close()
 
     try:

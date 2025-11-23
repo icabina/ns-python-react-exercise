@@ -69,7 +69,7 @@ def get_transactions_grid(
     count_sql = text("SELECT COUNT(*) FROM transactions")
     total_count = db.execute(count_sql).scalar()
 
-    # transform SQL results into list of TransactionGridItem dicts
+    # transform SQL results into list of TransactionGridItem dictionaries
     transactions = [
         TransactionGridItem(
             id=row.transaction_id,

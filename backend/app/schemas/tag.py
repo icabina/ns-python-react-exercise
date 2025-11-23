@@ -12,5 +12,3 @@ class TagInDBBase(TagBase):
 
 class Tag(TagInDBBase):
     pass
-
-
