@@ -1,1 +1,1 @@
-from . import transaction, category
+from . import transaction, category, tag
