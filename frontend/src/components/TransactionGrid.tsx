@@ -96,8 +96,8 @@ const TransactionGrid: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {transactions.map((t) => (
-              <tr key={t.id}>
+            {transactions.map((t, index) => (
+              <tr key={t.id} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
                 <td className="px-6 py-4 text-center text-sm text-gray-500">
                   {new Date(t.date).toLocaleDateString()}
                 </td>
@@ -142,6 +142,7 @@ const TransactionGrid: React.FC = () => {
             )}
           </tbody>
         </table>
+
         {/* Pagination controls */}
         <div className="px-6 py-4 flex justify-between items-center">
           <button
